@@ -1,0 +1,69 @@
+rules:
+  - id: ignore_previous_instructions
+    name: Ignorar instrucciones anteriores
+    description: Intenta que el modelo ignore sus instrucciones del system prompt
+    severity: high
+    action: block
+    weight: 1.0
+    patterns:
+      - "ignore.*(previous|all|above|prior).*(instructions|commands|directions|prompts)"
+      - "disregard.*(previous|all|above).*instructions"
+      - "forget.*(previous|all|above).*instructions"
+      - "do not follow.*(instructions|prompt|rules)"
+
+  - id: system_prompt_extraction
+    name: Extracción del system prompt
+    description: Intenta que el modelo revele su prompt del sistema
+    severity: high
+    action: block
+    weight: 1.0
+    patterns:
+      - "(reveal|show|print|output|display|leak|dump).*(system|initial|starting|original).*(prompt|instruction|message)"
+      - "what (is|was|were|are).*(your|the).*(system|initial).*(prompt|instruction)"
+      - "tell me (your|the).*(system|initial).*(prompt|instruction)"
+      - "repeat.*(system|initial).*(prompt|instruction|message)"
+
+  - id: role_manipulation
+    name: Manipulación de rol
+    description: Intenta cambiar el rol del modelo a uno sin restricciones
+    severity: high
+    action: block
+    weight: 0.8
+    patterns:
+      - "you are now (DAN|jailbreak|unfiltered|ungoverned|unleashed)"
+      - "act as (if you are|though you are) (DAN|unfiltered|without.*restrictions)"
+      - "from now on you are"
+      - "you will roleplay as"
+
+  - id: developer_mode
+    name: Modo desarrollador
+    description: Intenta activar modos de desarrollo sin restricciones
+    severity: medium
+    action: flag
+    weight: 0.6
+    patterns:
+      - "developer.?mode"
+      - "do.?anything.?now"
+      - "you (have|possess).*no.*(restrictions|limitations|boundaries|constraints)"
+      - "you are (free|allowed).*to.*(do|say|output).*anything"
+
+  - id: delimiter_manipulation
+    name: Manipulación de delimitadores
+    description: Intenta confundir al modelo con delimitadores falsos
+    severity: medium
+    action: flag
+    weight: 0.5
+    patterns:
+      - "<system>|</system>|<assistant>|</assistant>"
+      - '\[system\]|\[user\]|\[assistant\]'
+
+  - id: encoded_payload
+    name: Payload codificado
+    description: Texto que pide decodificar contenido sospechoso
+    severity: medium
+    action: flag
+    weight: 0.5
+    patterns:
+      - "decode.*(base64|hex|rot13|binary)"
+      - "convert.*(from|to).*(base64|hex)"
+      - "this is (encoded|encrypted|obfuscated)"
