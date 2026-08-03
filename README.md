@@ -9,7 +9,7 @@ Proxy inverso que intercepta llamadas a APIs de LLM y las analiza en múltiples 
 | Fase | Estado |
 |------|--------|
 | **Fase 1 — Proxy funcional** | ✅ Completa |
-| **Fase 2 — Firewall determinístico** | ⏳ Pendiente |
+| **Fase 2 — Firewall determinístico** | ✅ Completa |
 | **Fase 3 — Machine Learning** | ⏳ Pendiente |
 | **Fase 4 — Seguridad contextual** | ⏳ Pendiente |
 | **Fase 5 — Producto demostrable** | ⏳ Pendiente |
@@ -39,9 +39,13 @@ Autenticación, base de datos, Redis, detección de inyecciones, seguridad. Solo
 
 ---
 
-## Fase 2: Firewall determinístico ⏳
+## Fase 2: Firewall determinístico ✅
 
-La primera capa de seguridad real del proxy.
+La primera capa de seguridad real del proxy. Implementada en dos sub-fases:
+- **2.1 (commit `5d75567`)**: normalización, motor de reglas YAML, risk score
+- **2.2 (commit `dbc85fe`)**: PostgreSQL (SQLAlchemy async + Alembic), Redis (rate limit + caché de decisiones), API keys internas, auditoría
+
+Decisiones detalladas y trade-offs en [docs/fase-2-firewall-deterministico.md](docs/fase-2-firewall-deterministico.md).
 
 ### Lo que incluye
 - **Normalización de entrada**: Unicode, caracteres invisibles, homoglyphs, decodificación controlada (Base64, hex, ROT13), detección de texto bidireccional
