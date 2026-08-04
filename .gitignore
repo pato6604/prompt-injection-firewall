@@ -6,3 +6,14 @@ venv/
 *.egg-info/
 dist/
 .pytest_cache/
+
+# ML: modelos entrenados (se regeneran) — versionar solo *.md y metadata.yaml
+ml/models/*
+!ml/models/*/
+ml/models/*/**
+!ml/models/*/*.md
+!ml/models/*/metadata.yaml
+# Cache de HuggingFace
+.cache/huggingface/
+# Feedback loop: prompts reales de usuarios NUNCA se commitean
+ml/data/feedback_augmented.csv

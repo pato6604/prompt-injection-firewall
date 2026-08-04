@@ -11,3 +11,9 @@ asyncpg
 aiosqlite
 alembic
 redis>=5.0
+
+# Las dependencias de entrenamiento ML viven en requirements-ml.txt.
+# Están separadas a propósito: torch+transformers pesan ~2GB y romperían
+# el cold start en producción.
+# En producción, cuando exista el detector (Fase 3.3), solo se agregarán
+# onnxruntime y tokenizers.
