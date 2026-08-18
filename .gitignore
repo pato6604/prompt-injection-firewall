@@ -17,3 +17,7 @@ ml/models/*/**
 .cache/huggingface/
 # Feedback loop: prompts reales de usuarios NUNCA se commitean
 ml/data/feedback_augmented.csv
+
+# Archivos temporales de trabajo del pipeline de desarrollo
+.codex_prompt_*.txt
+.hermes/

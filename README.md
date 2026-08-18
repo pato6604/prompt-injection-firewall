@@ -10,7 +10,7 @@ Proxy inverso que intercepta llamadas a APIs de LLM y las analiza en múltiples 
 |------|--------|
 | **Fase 1 — Proxy funcional** | ✅ Completa |
 | **Fase 2 — Firewall determinístico** | ✅ Completa |
-| **Fase 3 — Machine Learning** | ⏳ Pendiente |
+| **Fase 3 — Machine Learning** | 🚧 En progreso (3.1 completa) |
 | **Fase 4 — Seguridad contextual** | ⏳ Pendiente |
 | **Fase 5 — Producto demostrable** | ⏳ Pendiente |
 
@@ -71,7 +71,7 @@ Decisiones detalladas y trade-offs en [docs/fase-2-firewall-deterministico.md](d
 
 ---
 
-## Fase 3: Machine Learning ⏳
+## Fase 3: Machine Learning 🚧
 
 Clasificador de prompts maliciosos basado en modelos de lenguaje.
 
@@ -83,6 +83,13 @@ Clasificador de prompts maliciosos basado en modelos de lenguaje.
 - Exportación a ONNX + inferencia con ONNX Runtime
 - Versionado de detectores
 - Feedback loop de falsos positivos
+
+### Estado actual (sub-fase 3.1 completa)
+- Dataset curado en `ml/data/` (inglés de deepset/prompt-injections Apache-2.0 + subset propio en español, ~600 ejemplos), split estratificado 80/10/10 con seed 42 (train 1169 / val 146 / test 147).
+- Baseline TF-IDF + Logistic Regression entrenado y versionado en `ml/models/tfidf_lr_v1/` (`model.joblib` + `metadata.yaml`): F1 macro 0.944 en val, 0.938 en test.
+- Tests de dataset y smoke test del baseline en `tests/test_ml_dataset.py` y `tests/test_ml_baseline.py` (8 tests). Suite completa: 65 tests pasando.
+- Próximo: fine-tune de MiniLM (3.2), integración al pipeline de detección como Capa 4 + versionado de detectores y feedback loop (3.3).
+- El baseline no entiende semántica ni paráfrasis — los ataques reformulados lo esquivan; es la referencia obligada para justificar el modelo avanzado (MiniLM).
 
 ### Evolución del modelo
 ```
