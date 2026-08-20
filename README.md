@@ -1,6 +1,6 @@
 # 🛡️ Prompt Injection Firewall
 
-Proxy inverso que intercepta llamadas a APIs de LLM y las analiza en múltiples capas de seguridad antes de permitirlas, modificarlas o bloquearlas.
+Proxy inverso que intercepta llamadas a APIs de LLM y las analiza en múltiples capas de seguridad antes de permitirlas, modificarlas o bloquearlas
 
 ---
 
